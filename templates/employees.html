@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employees</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <div class="container">
+
+        <a class="navbar-brand" href="#">Employee Management Portal</a>
+
+        <div>
+            <a href="/dashboard" class="btn btn-light btn-sm">Dashboard</a>
+            <a href="/employees" class="btn btn-light btn-sm">Employees</a>
+            <a href="/" class="btn btn-danger btn-sm">Logout</a>
+        </div>
+
+    </div>
+</nav>
+
+<div class="container mt-4">
+
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2>Employees</h2>
+
+        <a href="/add_employee" class="btn btn-success">
+    Add Employee
+</a>
+    </div>
+
+    <table class="table table-bordered table-hover">
+
+        <thead class="table-primary">
+    <tr>
+        <th>Employee ID</th>
+        <th>Name</th>
+        <th>Department</th>
+        <th>Email</th>
+        <th>Action</th>
+    </tr>
+</thead>
+
+       <tbody>
+
+    {% for employee in employees %}
+
+    <tr>
+    <td>{{ employee.emp_id }}</td>
+    <td>{{ employee.name }}</td>
+    <td>{{ employee.department }}</td>
+    <td>{{ employee.email }}</td>
+    <td>
+
+    <a href="/edit_employee/{{ employee.emp_id }}"
+       class="btn btn-warning btn-sm">
+        Edit
+    </a>
+
+    <a href="/delete_employee/{{ employee.emp_id }}"
+       class="btn btn-danger btn-sm"
+       onclick="return confirm('Are you sure you want to delete this employee?')">
+        Delete
+    </a>
+
+</td>
+</tr>
+
+    {% endfor %}
+
+</tbody>
+
+    </table>
+
+</div>
+
+</body>
+</html>
