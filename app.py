@@ -112,7 +112,7 @@ def dashboard():
     total_users = len(users_list)
 
     departments = set()
-
+    
     for employee in employees_list:
         departments.add(employee["department"])
 
