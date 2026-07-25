@@ -60,7 +60,45 @@ def login():
 
     return render_template("login.html")
 
+# =============================
+# Register
+# =============================
+@app.route("/register", methods=["GET", "POST"])
+def register():
 
+    if request.method == "POST":
+
+        username = request.form.get("username")
+        password = request.form.get("password")
+        confirm_password = request.form.get("confirm_password")
+
+        # Check if passwords match
+        if password != confirm_password:
+            return render_template(
+                "register.html",
+                error="Passwords do not match."
+            )
+
+        # Check if username already exists
+        for user in users_list:
+            if user["username"] == username:
+                return render_template(
+                    "register.html",
+                    error="Username already exists."
+                )
+
+        # Add new user
+        users_list.append({
+            "username": username,
+            "password": password
+        })
+
+        return redirect("/")
+
+    return render_template("register.html")
+# =============================
+# Dashboard
+# =============================
 # =============================
 # Dashboard
 # =============================
@@ -70,7 +108,26 @@ def dashboard():
     if "username" not in session:
         return redirect("/")
 
-    return render_template("dashboard.html")
+    total_employees = len(employees_list)
+    total_users = len(users_list)
+
+    departments = set()
+
+    for employee in employees_list:
+        departments.add(employee["department"])
+
+    total_departments = len(departments)
+
+    recent_employees = employees_list[-5:]
+
+    return render_template(
+        "dashboard.html",
+        username=session["username"],
+        total_employees=total_employees,
+        total_users=total_users,
+        total_departments=total_departments,
+        recent_employees=recent_employees
+    )
 
 
 # =============================
