@@ -11,6 +11,7 @@ Usage:
 """
 from deployment import utils
 import sys
+from deployment import installer
 
 
 def setup():
