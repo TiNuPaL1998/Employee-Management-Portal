@@ -1,10 +1,11 @@
-# Terraform
+venv/
+__pycache__/
+*.pyc
+.env
+
 terraform/.terraform/
 terraform/*.tfstate
-terraform/*.tfstate.*
-terraform/.terraform.lock.hcl
+terraform/*.tfstate.backup
 
-# Secrets
-*.pem
-*accessKeys*.csv
-.env
+.idea/
+.vscode/
