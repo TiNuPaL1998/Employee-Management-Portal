@@ -17,34 +17,33 @@ def setup():
 
     utils.info("Starting setup...")
 
-    utils.run_command(["python", "--version"])
+    utils.run_command(["python3", "--version"])
 
     utils.success("Setup completed.")
 
 
 def deploy():
-    print("📦 Deploying application...")
+    utils.info("Deploying application...")
 
 
 def status():
-    print("📊 Checking system status...")
+    utils.info("Checking system status...")
 
 
 def health():
-    print("❤️ Checking application health...")
+    utils.info("Checking application health...")
 
 
 def aws():
-    print("☁️ AWS CLI Operations...")
-
+    utils.info("Performing AWS CLI operations...")
 
 def help_menu():
-    print("\nAvailable Commands:\n")
-    print("  setup    - Prepare server")
-    print("  deploy   - Deploy application")
-    print("  status   - Check server status")
-    print("  health   - Health check")
-    print("  aws      - AWS CLI operations")
+    utils.info("\nAvailable Commands:\n")
+    utils.info("  setup    - Prepare server")
+    utils.info("  deploy   - Deploy application")
+    utils.info("  status   - Check server status")
+    utils.info("  health   - Health check")
+    utils.info("  aws      - AWS CLI operations")
 
 
 def main():
