@@ -1,6 +1,10 @@
 pipeline {
     agent any
-
+    options {
+        disableConcurrentBuilds()
+        timestamps()
+        timeout(time: 20, unit: 'MINUTES')
+    }
     environment {
         VENV = "venv"
         AWS_REGION = "ap-south-1"
