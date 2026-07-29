@@ -11,27 +11,27 @@ pipeline {
 
         stage('Python Version') {
             steps {
-                bat 'python --version'
+                sh 'python3 --version'
             }
         }
 
         stage('Pip Version') {
             steps {
-                bat 'pip --version'
+                sh 'pip3 --version'
             }
         }
 
         stage('Install Dependencies') {
             steps {
-                bat 'pip install -r requirements.txt'
+                sh 'pip3 install -r requirements.txt'
             }
         }
 
         stage('Application Check') {
-    steps {
-        bat 'python -m py_compile app.py'
-    }
-}
+            steps {
+                sh 'python3 -m py_compile app.py'
+            }
+        }
     }
 
     post {
