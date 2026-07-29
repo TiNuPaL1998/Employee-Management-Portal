@@ -1,0 +1,6 @@
+cd "C:\Program Files\Jenkins"
+dir
+check jenkins.war exist or not
+java -jar "C:\Program Files\Jenkins\jenkins.war"
+
+then run http://localhost:8080

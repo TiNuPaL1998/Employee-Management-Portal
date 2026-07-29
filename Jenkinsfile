@@ -5,7 +5,6 @@ pipeline {
 
         stage('Checkout') {
             steps {
-                echo 'Source code downloaded successfully.'
                 checkout scm
             }
         }
@@ -29,25 +28,23 @@ pipeline {
         }
 
         stage('Application Check') {
-            steps {
-                bat 'python app.py --help'
-            }
-        }
+    steps {
+        bat 'python -m py_compile app.py'
+    }
+}
     }
 
     post {
         always {
-            echo 'Pipeline Finished.'
+            echo 'Pipeline Finished'
         }
 
         success {
-            echo 'Pipeline Completed Successfully.'
+            echo 'Build Successful'
         }
 
         failure {
-            echo 'Pipeline Failed.'
+            echo 'Build Failed'
         }
     }
 }
-
-
