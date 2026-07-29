@@ -15,21 +15,30 @@ pipeline {
             }
         }
 
-        stage('Pip Version') {
+        stage('Create Virtual Environment') {
             steps {
-                sh 'pip3 --version'
+                sh '''
+                python3 -m venv venv
+                '''
             }
         }
 
         stage('Install Dependencies') {
             steps {
-                sh 'pip3 install -r requirements.txt'
+                sh '''
+                . venv/bin/activate
+                pip install --upgrade pip
+                pip install -r requirements.txt
+                '''
             }
         }
 
         stage('Application Check') {
             steps {
-                sh 'python3 -m py_compile app.py'
+                sh '''
+                . venv/bin/activate
+                python -m py_compile app.py
+                '''
             }
         }
     }
