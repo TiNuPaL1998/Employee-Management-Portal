@@ -1,7 +1,17 @@
 pipeline {
     agent any
 
+    environment {
+        VENV = "venv"
+    }
+
     stages {
+
+        stage('Checkout') {
+            steps {
+                checkout scm
+            }
+        }
 
         stage('Python Version') {
             steps {
@@ -12,7 +22,7 @@ pipeline {
         stage('Create Virtual Environment') {
             steps {
                 sh '''
-                python3 -m venv venv
+                    python3 -m venv ${VENV}
                 '''
             }
         }
@@ -20,27 +30,46 @@ pipeline {
         stage('Install Dependencies') {
             steps {
                 sh '''
-                . venv/bin/activate
-                pip install --upgrade pip
-                pip install -r requirements.txt
+                    . ${VENV}/bin/activate
+                    python -m pip install --upgrade pip
+                    pip install -r requirements.txt
                 '''
             }
         }
 
-        stage('Application Check') {
+        stage('Application Validation') {
             steps {
                 sh '''
-                . venv/bin/activate
-                python -m py_compile app.py
+                    . ${VENV}/bin/activate
+                    python -m py_compile app.py
                 '''
+            }
+        }
+
+        stage('Build Docker Image') {
+            steps {
+                sh '''
+                    docker build -t employee-management-portal:latest .
+                '''
+            }
+        }
+
+        stage('List Docker Images') {
+            steps {
+                sh '''
+                    docker images
+                '''
+            }
+        }
+
+        stage('Build Summary') {
+            steps {
+                echo "Application validation completed successfully."
             }
         }
     }
 
     post {
-        always {
-            echo 'Pipeline Finished'
-        }
 
         success {
             echo 'Build Successful'
@@ -48,6 +77,12 @@ pipeline {
 
         failure {
             echo 'Build Failed'
+        }
+
+        always {
+            sh 'rm -rf ${VENV}'
+            cleanWs()
+            echo 'Pipeline Finished'
         }
     }
 }
